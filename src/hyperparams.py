@@ -10,3 +10,10 @@ random_seed = 42
 # Default batch parameters
 default_context_length = 8
 default_batch_size = 4
+
+# Model parameters
+max_epoch = 20000
+learning_rate = 3e-4
+context_length = 8
+batch_size = 32
+report_interval = max_epoch / 5
