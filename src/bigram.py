@@ -11,11 +11,11 @@ from data import vocab_size, train_dataset, test_dataset
 
 # Hyperparameters
 from hyperparams import (
-    max_epoch,
-    learning_rate,
-    context_length,
-    batch_size,
-    report_interval,
+    MAX_EPOCH,
+    LEARNING_RATE,
+    CONTEXT_LENGTH,
+    BATCH_SIZE,
+    REPORT_INTERVAL,
 )
 
 # Feature flags
@@ -110,15 +110,15 @@ if enable_initial_generation:
 # Training
 # ------------------------------------------
 
-optimizer = torch.optim.AdamW(model.parameters(), lr=learning_rate)
+optimizer = torch.optim.AdamW(model.parameters(), lr=LEARNING_RATE)
 
-epochs = range(max_epoch)
+epochs = range(MAX_EPOCH)
 loss_history = {"train": [], "validation": []}
 
 for epoch in epochs:
     # Training step
     model.train()
-    x_batch, y_batch = get_batch(train_dataset, context_length, batch_size)
+    x_batch, y_batch = get_batch(train_dataset, CONTEXT_LENGTH, BATCH_SIZE)
     logits, loss = model.forward(x_batch, y_batch)
 
     if loss is not None:
@@ -130,14 +130,14 @@ for epoch in epochs:
     # Validation step
     model.eval()
     with torch.no_grad():
-        xv_batch, yv_batch = get_batch(test_dataset, context_length, batch_size)
+        xv_batch, yv_batch = get_batch(test_dataset, CONTEXT_LENGTH, BATCH_SIZE)
         _, vloss = model.forward(xv_batch, yv_batch)
 
         if vloss is not None:
             loss_history["validation"].append(vloss.item())
 
     if enable_loss_report:
-        if (epoch + 1) % report_interval == 0:
+        if (epoch + 1) % REPORT_INTERVAL == 0:
             print(
                 f"Epoch: {epoch + 1:5d}, loss: {loss:.4f}, validation loss: {vloss:.4f}"
             )

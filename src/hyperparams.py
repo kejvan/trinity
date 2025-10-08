@@ -3,17 +3,17 @@
 # ------------------------------------------
 
 # Data preprocessing
-min_passage_length = 1000
-train_split_ratio = 0.8
-random_seed = 42
+MIN_PASSAGE_LENGTH = 1000
+TRAIN_SPLIT_RATIO = 0.8
+RANDOM_SEED = 42
 
 # Default batch parameters
-default_context_length = 8
-default_batch_size = 4
+DEFAULT_CONTEXT_LENGTH = 8
+DEFAULT_BATCH_SIZE = 4
 
 # Model parameters
-max_epoch = 20000
-learning_rate = 3e-4
-context_length = 8
-batch_size = 32
-report_interval = max_epoch / 5
+MAX_EPOCH = 20000
+LEARNING_RATE = 3e-4
+CONTEXT_LENGTH = 8
+BATCH_SIZE = 32
+REPORT_INTERVAL = MAX_EPOCH / 5

@@ -8,11 +8,11 @@ import torch
 
 # Hyperparameters
 from hyperparams import (
-    min_passage_length,
-    train_split_ratio,
-    random_seed,
-    default_context_length,
-    default_batch_size,
+    MIN_PASSAGE_LENGTH,
+    TRAIN_SPLIT_RATIO,
+    RANDOM_SEED,
+    DEFAULT_CONTEXT_LENGTH,
+    DEFAULT_BATCH_SIZE,
 )
 
 # Feature flags
@@ -62,21 +62,21 @@ if enable_vocab_info:
 dataset = []
 left, right = 0, 0
 while right < len(input_text):
-    if right - left >= min_passage_length and input_text[right : right + 2] == "\n\n":
+    if right - left >= MIN_PASSAGE_LENGTH and input_text[right : right + 2] == "\n\n":
         dataset.append(input_text[left:right])
         left = right + 2
     right += 1
 
 # Create train/test split
-split_index = int(train_split_ratio * len(dataset))
+split_index = int(TRAIN_SPLIT_RATIO * len(dataset))
 train_list = dataset[:split_index]
 test_list = dataset[split_index:]
 
 if enable_dataset_info:
     print(f"Dataset size: {len(dataset)}")
-    print(f"Train dataset size ({int(train_split_ratio * 100)}%): {len(train_list)}")
+    print(f"Train dataset size ({int(TRAIN_SPLIT_RATIO * 100)}%): {len(train_list)}")
     print(
-        f"Test dataset size ({int((1 - train_split_ratio) * 100)}%): {len(test_list)}"
+        f"Test dataset size ({int((1 - TRAIN_SPLIT_RATIO) * 100)}%): {len(test_list)}"
     )
     print()
 
@@ -142,11 +142,11 @@ if enable_dataset_info:
 # Batch processing
 # ------------------------------------------
 
-torch.manual_seed(random_seed)
+torch.manual_seed(RANDOM_SEED)
 
 
 def get_batch(
-    data, context_length=default_context_length, batch_size=default_batch_size
+    data, context_length=DEFAULT_CONTEXT_LENGTH, batch_size=DEFAULT_BATCH_SIZE
 ):
     """Generate random batches of input/target sequences for training"""
     input_sequences = []
