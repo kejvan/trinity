@@ -19,6 +19,7 @@ from hyperparams import (
 )
 
 # Feature flags
+enable_parameter_count = True
 enable_loss_report = True
 enable_initial_generation = True
 enable_post_training_generation = True
@@ -97,6 +98,11 @@ def generate_text(model, start_text, max_new_tokens):
 # ------------------------------------------
 
 model = BigramLanguageModel(vocab_size).to(device)
+
+if enable_parameter_count:
+    num_params = sum(p.numel() for p in model.parameters())
+    print(f"Number of model parameters: {num_params}")
+    print()
 
 if enable_initial_generation:
     input_text = "\n"
