@@ -120,11 +120,17 @@ if enable_tokenization_demo:
 
 # Convert text passages to tokenized tensors and concatenate
 train_dataset = torch.cat(
-    [torch.tensor(encode(passage), dtype=torch.long) for passage in train_list]
-).to(device)
+    [
+        torch.tensor(encode(passage), dtype=torch.long, device=device)
+        for passage in train_list
+    ]
+)
 test_dataset = torch.cat(
-    [torch.tensor(encode(passage), dtype=torch.long) for passage in test_list]
-).to(device)
+    [
+        torch.tensor(encode(passage), dtype=torch.long, device=device)
+        for passage in test_list
+    ]
+)
 
 if enable_dataset_info:
     print(f"Train dataset shape: {train_dataset.shape}")
