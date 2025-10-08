@@ -21,7 +21,7 @@ from hyperparams import (
 # Feature flags
 enable_loss_report = True
 enable_initial_generation = True
-enable_post_training_generation = False
+enable_post_training_generation = True
 enable_plotting = False
 
 
@@ -59,7 +59,7 @@ class BigramLanguageModel(tnn.Module):
         if targets is None:
             loss = None
         else:
-            # Flatten for cross entropy calculation
+            # Flatten for cross entropy calculation (B: batch, T: context, C: vocab)
             B, T, C = logits.shape
             logits_flat = logits.view(B * T, C)
             targets_flat = targets.view(B * T)
@@ -87,7 +87,7 @@ def generate_text(model, start_text, max_new_tokens):
     """Generate text starting from given input"""
     from data import encode, decode
 
-    context = torch.tensor([encode(start_text)]).to(device)
+    context = torch.tensor([encode(start_text)], device=device)
     generated = model.generate(context, max_new_tokens)
     return decode(generated[0].tolist())
 
